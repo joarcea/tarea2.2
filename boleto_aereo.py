@@ -3,6 +3,7 @@ Boleto Aereo - Air Ticket Booking System
 This module implements a simple air ticket booking system.
 """
 
+import secrets
 from datetime import datetime
 from typing import Optional
 
@@ -52,15 +53,13 @@ class BoletoAereo:
     
     def _generar_codigo_reserva(self) -> str:
         """
-        Generate a unique reservation code based on passenger info and timestamp.
+        Generate a unique reservation code using secure random values.
         
         Returns:
             A unique reservation code
         """
-        import hashlib
-        data = f"{self.nombre_pasajero}{self.identificacion}{datetime.now().timestamp()}"
-        hash_code = hashlib.md5(data.encode()).hexdigest()[:6].upper()
-        return f"BA{hash_code}"
+        random_code = secrets.token_hex(3).upper()
+        return f"BA{random_code}"
     
     def mostrar_boleto(self) -> str:
         """
